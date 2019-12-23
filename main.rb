@@ -23,8 +23,10 @@ end
 # 勇者クラスをインスタンス化
 brave = Brave.new
 
-# パラメータに値を設定
-brave.name = "テリー"
-brave.hp = 500
-brave.offense = 150
-brave.defense = 100
+# パラメータに値を設定 ヒアドキュメント
+puts <<~TEXT
+NAME:#{brave.name}
+HP:#{brave.hp}
+OFFENSE:#{brave.offense}
+DEFENSE:#{brave.defense}
+TEXT

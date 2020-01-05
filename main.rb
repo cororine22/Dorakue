@@ -13,15 +13,26 @@ class Brave
     @offense = params[:offense]
     @defense = params[:defense]
   end
+end
 
-  # # セッターを再定義
-  # def hp=(hp)
-  #   @hp
-  # end
+class Monster
+  # attr_readerの記述でゲッターを省略することができる
+  attr_reader :name, :offense, :defense
+  # セッターゲッターを一括定義
+  attr_accessor :hp
+
+  def initialize(**params)
+    @name = params[:name]
+    @hp = params[:hp]
+    @offense = params[:offense]
+    @defense = params[:defense]
+  end
 end
 
 # 勇者クラスをインスタンス化
 brave = Brave.new(name:"テリー", hp:500, offense:150, defense:100)
+# モンスタークラスをインスタンス化
+monster = Monster.new(name: "モンスター", hp: 250, offense: 200, defense: 100)
 
 # パラメータに値を設定 ヒアドキュメント
 puts <<~TEXT
@@ -36,3 +47,4 @@ brave.hp -= 30
 
 # ダメージに関するメッセージ
 puts "#{brave.name}はダメージを受けた!　残りHPは#{brave.hp}だ"
+

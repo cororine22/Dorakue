@@ -1,6 +1,9 @@
 class Brave
   # attr_readerの記述でゲッターを省略することができる
-  attr_reader :name, :hp, :offense, :defense
+  attr_reader :name, :offense, :defense
+  # セッターゲッターを一括定義
+  attr_accessor :hp
+
 
   # new演算子から渡された引数を受け取る
   def initialize(**params)
@@ -10,6 +13,11 @@ class Brave
     @offense = params[:offense]
     @defense = params[:defense]
   end
+
+  # # セッターを再定義
+  # def hp=(hp)
+  #   @hp
+  # end
 end
 
 # 勇者クラスをインスタンス化
@@ -22,3 +30,9 @@ HP:#{brave.hp}
 OFFENSE:#{brave.offense}
 DEFENSE:#{brave.defense}
 TEXT
+
+# hpにダメージを与える処理
+brave.hp -= 30
+
+# ダメージに関するメッセージ
+puts "#{brave.name}はダメージを受けた!　残りHPは#{brave.hp}だ"

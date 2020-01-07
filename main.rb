@@ -4,6 +4,9 @@ class Brave
   # セッターゲッターを一括定義
   attr_accessor :hp
 
+  # 必殺攻撃の計算に使う定数
+  SPECIAL_ATTACK_CONSTANT = 1.5
+
   # new演算子から渡された引数を受け取る
   def initialize(**params)
     # 各パラメータをハッシュで取得
@@ -15,14 +18,31 @@ class Brave
 
   # 攻撃処理を実装するメソッド
   def attack(monster)
+    puts "#{@name}の攻撃"
+
+    # 0~3の間でランダムに数字が変わる
+    attack_num = rand(4)
+
+    # 4分の1の確率でspecial_attackを実行
+    if attack_num == 0
+      puts "必殺攻撃"
+      damage = calculate_special_attack - monster.defense
+    else
+      puts "通常攻撃"
+      damage = @offense - monster.defense
+    end
+
     # ダメージ計算の処理を追加
-    damage = @offense - monster.defense
     monster.hp = monster.hp - damage
 
     # メッセージを追記
-    puts "#{@name}の攻撃"
     puts "#{monster.name}は#{damage}のダメージを受けた"
     puts "#{monster.name}の残りHPは#{monster.hp}だ"
+  end
+
+  def calculate_special_attack
+    # 攻撃力が1.5倍
+    @offense * SPECIAL_ATTACK_CONSTANT
   end
 end
 

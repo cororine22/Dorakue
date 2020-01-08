@@ -52,12 +52,29 @@ class Monster
   # セッターゲッターを一括定義
   attr_accessor :hp
 
+  # HPの半分の値を計算する定数
+  CALC_HALF_HP = 0.5
+
   def initialize(**params)
     @name = params[:name]
     @hp = params[:hp]
     @offense = params[:offense]
     @defense = params[:defense]
   end
+
+  def attack(brave)
+
+    puts "#{@name}の攻撃"
+    damage = @offense - brave.defense
+
+    # ダメージ計算の処理を追加
+    brave.hp -= damage
+
+    # メッセージを追記
+    puts "#{brave.name}は#{damage}のダメージを受けた"
+    puts "#{brave.name}の残りHPは#{brave.hp}だ"
+  end
+
 end
 
 # 勇者クラスをインスタンス化
@@ -65,20 +82,7 @@ brave = Brave.new(name:"テリー", hp:500, offense:150, defense:100)
 # モンスタークラスをインスタンス化
 monster = Monster.new(name: "スライム", hp: 250, offense: 200, defense: 100)
 
-# # パラメータに値を設定 ヒアドキュメント
-# puts <<~TEXT
-# NAME:#{brave.name}
-# HP:#{brave.hp}
-# OFFENSE:#{brave.offense}
-# DEFENSE:#{brave.defense}
-# TEXT
-
-# # hpにダメージを与える処理
-# brave.hp -= 30
-
-# # ダメージに関するメッセージ
-# puts "#{brave.name}はダメージを受けた!　残りHPは#{brave.hp}だ"
-
 # attackメソッドの呼び出し
 brave.attack(monster)
+monster.attack(brave)
 

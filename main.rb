@@ -54,15 +54,30 @@ class Monster
 
   # HPの半分の値を計算する定数
   CALC_HALF_HP = 0.5
+  # 攻撃力にかける1.5は定数で定義
+  POWER_UP_RATE = 1.5
 
   def initialize(**params)
     @name = params[:name]
     @hp = params[:hp]
     @offense = params[:offense]
     @defense = params[:defense]
+
+    # モンスターが変身したかどうかを判定するフラグ
+    @transform_flag = false
+
+    # 変身する際の閾値（トリガー）を計算
+    @trigger_of_transform = params[:hp] * CALC_HALF_HP
   end
 
   def attack(brave)
+    # HPが半分以下、かつ、モンスター変身判定フラグがfalseの時に実行
+    if @hp <= @trigger_of_transform && @transform_flag == false
+      # モンスター変身判定フラグにtrueを代入
+      transform_flag = true
+      # 変身メソッドを実行
+      transform
+    end
 
     puts "#{@name}の攻撃"
     damage = @offense - brave.defense
@@ -75,10 +90,32 @@ class Monster
     puts "#{brave.name}の残りHPは#{brave.hp}だ"
   end
 
+  # クラス外から呼び出せないようにする
+  private
+    # 変身メソッドの定義
+    def transform
+      # 変身後の名前
+      transform_name = "ドラゴン"
+
+      # 変身メッセージ(ヒアドキュメント)
+      puts <<~EOS
+      #{@name}は怒っている
+      #{@name}は#{transform_name}に変身した
+      EOS
+
+      # モンスターの攻撃力を1.5倍にする
+      # 代入演算子で計算
+      @offense *=  POWER_UP_RATE
+
+      # モンスターの名前を変更
+      @name = transform_name
+
+    end
+
 end
 
 # 勇者クラスをインスタンス化
-brave = Brave.new(name:"テリー", hp:500, offense:150, defense:100)
+brave = Brave.new(name:"テリー", hp:500, offense:300, defense:100)
 # モンスタークラスをインスタンス化
 monster = Monster.new(name: "スライム", hp: 250, offense: 200, defense: 100)
 

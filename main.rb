@@ -20,24 +20,47 @@ class Brave
   def attack(monster)
     puts "#{@name}の攻撃"
 
+    # decision_attack_typeメソッドの呼び出し
+    attack_type = decision_attack_type
+
+    # calculate_damageメソッドの呼び出し
+    damage = calculate_damage(monster,attack_type)
+
+    # ダメージをHPに反映させる
+    cause_damage(monster, damage)
+
+    # メッセージを追記
+    puts "#{monster.name}の残りHPは#{monster.hp}だ"
+  end
+
+  # 攻撃の種類（通常攻撃 or 必殺攻撃）を判定するメソッド
+  def decision_attack_type
     # 0~3の間でランダムに数字が変わる
     attack_num = rand(4)
 
     # 4分の1の確率でspecial_attackを実行
     if attack_num == 0
       puts "必殺攻撃"
-      damage = calculate_special_attack - monster.defense
+      "special_attack"
     else
       puts "通常攻撃"
+      "normal_attack"
+    end
+  end
+
+  # ダメージの計算メソッド
+  def calculate_damage(monster, attack_type)
+    if attack_type == "special_attack"
+      damage = calculate_special_attack - monster.defense
+    else
       damage = @offense - monster.defense
     end
+  end
 
-    # ダメージ計算の処理を追加
-    monster.hp = monster.hp - damage
-
-    # メッセージを追記
+  # HPにダメージを反映させる
+  def cause_damage(monster, damage)
+    monster.hp -= damage
     puts "#{monster.name}は#{damage}のダメージを受けた"
-    puts "#{monster.name}の残りHPは#{monster.hp}だ"
   end
 
   def calculate_special_attack

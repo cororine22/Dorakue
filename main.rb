@@ -24,49 +24,57 @@ class Brave
     attack_type = decision_attack_type
 
     # calculate_damageメソッドの呼び出し
-    damage = calculate_damage(monster,attack_type)
+    damage = calculate_damage(target: monster, attack_type: attack_type)
 
     # ダメージをHPに反映させる
-    cause_damage(monster, damage)
+    cause_damage(target: monster, damage: damage)
 
     # メッセージを追記
     puts "#{monster.name}の残りHPは#{monster.hp}だ"
   end
 
-  # 攻撃の種類（通常攻撃 or 必殺攻撃）を判定するメソッド
-  def decision_attack_type
-    # 0~3の間でランダムに数字が変わる
-    attack_num = rand(4)
+  private
 
-    # 4分の1の確率でspecial_attackを実行
-    if attack_num == 0
-      puts "必殺攻撃"
-      "special_attack"
-    else
-      puts "通常攻撃"
-      "normal_attack"
+    # 攻撃の種類（通常攻撃 or 必殺攻撃）を判定するメソッド
+    def decision_attack_type
+      # 0~3の間でランダムに数字が変わる
+      attack_num = rand(4)
+
+      # 4分の1の確率でspecial_attackを実行
+      if attack_num == 0
+        puts "必殺攻撃"
+        "special_attack"
+      else
+        puts "通常攻撃"
+        "normal_attack"
+      end
     end
-  end
 
-  # ダメージの計算メソッド
-  def calculate_damage(monster, attack_type)
-    if attack_type == "special_attack"
-      damage = calculate_special_attack - monster.defense
-    else
-      damage = @offense - monster.defense
+    # ダメージの計算メソッド
+    def calculate_damage(**params)
+      target = params[:target]
+      attack_type = params[:attack_type]
+
+      if attack_type == "special_attack"
+        damage = calculate_special_attack - target.defense
+      else
+        damage = @offense - target.defense
+      end
     end
-  end
 
-  # HPにダメージを反映させる
-  def cause_damage(monster, damage)
-    monster.hp -= damage
-    puts "#{monster.name}は#{damage}のダメージを受けた"
-  end
+    # HPにダメージを反映させる
+    def cause_damage(**params)
+      target = params[:target]
+      damage = params[:damage]
 
-  def calculate_special_attack
-    # 攻撃力が1.5倍
-    @offense * SPECIAL_ATTACK_CONSTANT
-  end
+      target.hp -= damage
+      puts "#{target.name}は#{damage}のダメージを受けた"
+    end
+
+    def calculate_special_attack
+      # 攻撃力が1.5倍
+      @offense * SPECIAL_ATTACK_CONSTANT
+    end
 end
 
 class Monster
@@ -138,7 +146,7 @@ class Monster
 end
 
 # 勇者クラスをインスタンス化
-brave = Brave.new(name:"テリー", hp:500, offense:300, defense:100)
+brave = Brave.new(name:"テリー", hp:500, offense:150, defense:100)
 # モンスタークラスをインスタンス化
 monster = Monster.new(name: "スライム", hp: 250, offense: 200, defense: 100)
 

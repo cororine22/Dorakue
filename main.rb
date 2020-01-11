@@ -68,6 +68,9 @@ class Brave
       damage = params[:damage]
 
       target.hp -= damage
+
+      # もしターゲットのHPがマイナスになるなら0を代入
+      target.hp = 0 if target.hp < 0
       puts "#{target.name}は#{damage}のダメージを受けた"
     end
 
@@ -115,7 +118,6 @@ class Monster
 
     # ダメージ反映処理の呼び出し
     cause_damage(target: brave, damage: damage)
-    
 
     # メッセージを追記
     puts "#{brave.name}の残りHPは#{brave.hp}だ"
@@ -135,6 +137,10 @@ class Monster
       damage = params[:damage]
 
       target.hp -= damage
+
+      # もしターゲットのHPがマイナスになるなら0を代入
+      target.hp = 0 if target.hp < 0
+
       puts "#{target.name}は#{damage}のダメージを受けた"
     end
 
@@ -168,3 +174,15 @@ monster = Monster.new(name: "スライム", hp: 250, offense: 200, defense: 100)
 brave.attack(monster)
 monster.attack(brave)
 
+# ループ処理
+loop do
+  brave.attack(monster)
+
+  # モンスターのHPが0以下になったら無限ループを終了させる
+  break if monster.hp <= 0
+
+  monster.attack(brave)
+
+  # 勇者のHPが0以下になったら無限ループを終了させる
+  break if brave.hp <= 0
+end

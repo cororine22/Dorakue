@@ -111,18 +111,33 @@ class Monster
     end
 
     puts "#{@name}の攻撃"
-    damage = @offense - brave.defense
+    damage = calculate_damage(brave)
 
-    # ダメージ計算の処理を追加
-    brave.hp -= damage
+    # ダメージ反映処理の呼び出し
+    cause_damage(target: brave, damage: damage)
+    
 
     # メッセージを追記
-    puts "#{brave.name}は#{damage}のダメージを受けた"
     puts "#{brave.name}の残りHPは#{brave.hp}だ"
   end
 
   # クラス外から呼び出せないようにする
   private
+
+    # ダメージ計算処理
+    def calculate_damage(target)
+      @offense - target.defense
+    end
+
+    # ダメージ反映処理
+    def cause_damage(**params)
+      target = params[:target]
+      damage = params[:damage]
+
+      target.hp -= damage
+      puts "#{target.name}は#{damage}のダメージを受けた"
+    end
+
     # 変身メソッドの定義
     def transform
       # 変身後の名前
@@ -142,7 +157,6 @@ class Monster
       @name = transform_name
 
     end
-
 end
 
 # 勇者クラスをインスタンス化

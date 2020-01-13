@@ -1,20 +1,31 @@
-class Brave
-  # attr_readerの記述でゲッターを省略することができる
-  attr_reader :name, :offense, :defense
-  # セッターゲッターを一括定義
-  attr_accessor :hp
+# 親クラス
+class Character
+  attr_reader :offense, :defense
+  attr_accessor :hp, :name
 
-  # 必殺攻撃の計算に使う定数
-  SPECIAL_ATTACK_CONSTANT = 1.5
-
-  # new演算子から渡された引数を受け取る
   def initialize(**params)
-    # 各パラメータをハッシュで取得
     @name = params[:name]
     @hp = params[:hp]
     @offense = params[:offense]
     @defense = params[:defense]
   end
+end
+
+class Brave < Character
+  # 不要な定義を削除
+  # attr_reader :name, :offense, :defense
+  # attr_accessor :hp
+
+  # 必殺攻撃の計算に使う定数
+  SPECIAL_ATTACK_CONSTANT = 1.5
+
+  # 不要な定義を削除
+  # def initialize(**params)
+  #   @name = params[:name]
+  #   @hp = params[:hp]
+  #   @offense = params[:offense]
+  #   @defense = params[:defense]
+  # end
 
   # 攻撃処理を実装するメソッド
   def attack(monster)
@@ -80,11 +91,10 @@ class Brave
     end
 end
 
-class Monster
-  # attr_readerの記述でゲッターを省略することができる
-  attr_reader :name, :offense, :defense
-  # セッターゲッターを一括定義
-  attr_accessor :hp
+class Monster < Character
+  # 以下を削除
+  # attr_reader :offense, :defense
+  # attr_accessor :hp, :name
 
   # HPの半分の値を計算する定数
   CALC_HALF_HP = 0.5
@@ -92,10 +102,17 @@ class Monster
   POWER_UP_RATE = 1.5
 
   def initialize(**params)
-    @name = params[:name]
-    @hp = params[:hp]
-    @offense = params[:offense]
-    @defense = params[:defense]
+    # 以下を削除
+    # @name = params[:name]
+    # @hp = params[:hp]
+    # @offense = params[:offense]
+    # @defense = params[:defense]
+    super(
+      name: params[:name],
+      hp: params[:hp],
+      offense: params[:offense],
+      defense: params[:defense]
+    )
 
     # モンスターが変身したかどうかを判定するフラグ
     @transform_flag = false

@@ -177,12 +177,19 @@ monster.attack(brave)
 # ループ処理
 loop do
   brave.attack(monster)
-
-  # モンスターのHPが0以下になったら無限ループを終了させる
-  break if monster.hp <= 0
+  if monster.hp <= 0
+    exp = (monster.offense + monster.defense) * 2
+    gold = (monster.offense + monster.defense) * 3
+    puts "#{brave.name}はたたかいに勝った"
+    puts "#{exp}の経験値と#{gold}ゴールドを獲得した"
+    break
+  end
 
   monster.attack(brave)
 
-  # 勇者のHPが0以下になったら無限ループを終了させる
-  break if brave.hp <= 0
+  if brave.hp <= 0
+    puts "#{brave.name}はたたかいに負けた"
+    puts "目の前が真っ暗になった"
+    break
+  end
 end

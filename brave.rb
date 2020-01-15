@@ -4,7 +4,7 @@ class Brave < Character
 
     # 攻撃処理を実装するメソッド
     def attack(monster)
-      puts "#{@name}の攻撃"
+    #   puts "#{@name}の攻撃"
   
       # decision_attack_typeメソッドの呼び出し
       attack_type = decision_attack_type
@@ -14,9 +14,12 @@ class Brave < Character
   
       # ダメージをHPに反映させる
       cause_damage(target: monster, damage: damage)
+
+      # attack_messageの呼び出し
+      attack_message
   
       # メッセージを追記
-      puts "#{monster.name}の残りHPは#{monster.hp}だ"
+    #   puts "#{monster.name}の残りHPは#{monster.hp}だ"
     end
   
     private
@@ -28,10 +31,10 @@ class Brave < Character
   
         # 4分の1の確率でspecial_attackを実行
         if attack_num == 0
-          puts "必殺攻撃"
+        #   puts "必殺攻撃"
           "special_attack"
         else
-          puts "通常攻撃"
+        #   puts "通常攻撃"
           "normal_attack"
         end
       end
@@ -57,7 +60,7 @@ class Brave < Character
   
         # もしターゲットのHPがマイナスになるなら0を代入
         target.hp = 0 if target.hp < 0
-        puts "#{target.name}は#{damage}のダメージを受けた"
+        # puts "#{target.name}は#{damage}のダメージを受けた"
       end
   
       def calculate_special_attack

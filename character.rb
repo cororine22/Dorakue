@@ -1,5 +1,10 @@
+require './message_dialog'
+
 # 親クラス
 class Character
+    # MessageDialogのインクルード
+    include MessageDialog
+
     attr_reader :offense, :defense
     attr_accessor :hp, :name
   

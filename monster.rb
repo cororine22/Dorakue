@@ -24,7 +24,7 @@ class Monster < Character
       # HPが半分以下、かつ、モンスター変身判定フラグがfalseの時に実行
       if @hp <= @trigger_of_transform && @transform_flag == false
         # モンスター変身判定フラグにtrueを代入
-        transform_flag = true
+        @transform_flag = true
         # 変身メソッドを実行
         transform
       end

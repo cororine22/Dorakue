@@ -1,7 +1,4 @@
 class Monster < Character
-    # 以下を削除
-    # attr_reader :offense, :defense
-    # attr_accessor :hp, :name
   
     # HPの半分の値を計算する定数
     CALC_HALF_HP = 0.5
@@ -41,8 +38,6 @@ class Monster < Character
         attack_message
         # damage_messageの呼び出し
         damage_message(target: brave, damage: damage)
-  
-      
     end
   
     # クラス外から呼び出せないようにする
@@ -62,7 +57,6 @@ class Monster < Character
   
         # もしターゲットのHPがマイナスになるなら0を代入
         target.hp = 0 if target.hp < 0
-  
       end
   
       # 変身メソッドの定義
@@ -70,11 +64,7 @@ class Monster < Character
         # 変身後の名前
         transform_name = "ドラゴン"
   
-        # 変身メッセージ(ヒアドキュメント)
-        # puts <<~EOS
-        # #{@name}は怒っている
-        # #{@name}は#{transform_name}に変身した
-        # EOS
+        transform_message(origin_name: @name,transform_name: transform_name)
   
         # モンスターの攻撃力を1.5倍にする
         # 代入演算子で計算
@@ -82,6 +72,5 @@ class Monster < Character
   
         # モンスターの名前を変更
         @name = transform_name
-  
       end
   end

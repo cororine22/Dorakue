@@ -31,4 +31,15 @@ module MessageDialog
             EOS
         end
     end
+
+    def transform_message(**params)
+        origin_name = params[:origin_name]
+        transform_name = params[:transform_name]
+
+        # 変身メッセージ
+        puts <<~EOS
+        #{@name}は怒っている
+        #{@name}は#{transform_name}に変身した
+        EOS
+    end
 end

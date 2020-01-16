@@ -9,11 +9,6 @@ class Monster < Character
     POWER_UP_RATE = 1.5
   
     def initialize(**params)
-      # 以下を削除
-      # @name = params[:name]
-      # @hp = params[:hp]
-      # @offense = params[:offense]
-      # @defense = params[:defense]
       super(
         name: params[:name],
         hp: params[:hp],
@@ -36,18 +31,18 @@ class Monster < Character
         # 変身メソッドを実行
         transform
       end
-  
-    #   puts "#{@name}の攻撃"
+
         damage = calculate_damage(brave)
   
-      # ダメージ反映処理の呼び出し
+        # ダメージ反映処理の呼び出し
         cause_damage(target: brave, damage: damage)
 
-      # attack_messageの呼び出し
+        # attack_messageの呼び出し
         attack_message
+        # damage_messageの呼び出し
+        damage_message(target: brave, damage: damage)
   
-      # メッセージを追記
-    #   puts "#{brave.name}の残りHPは#{brave.hp}だ"
+      
     end
   
     # クラス外から呼び出せないようにする
@@ -68,7 +63,6 @@ class Monster < Character
         # もしターゲットのHPがマイナスになるなら0を代入
         target.hp = 0 if target.hp < 0
   
-        # puts "#{target.name}は#{damage}のダメージを受けた"
       end
   
       # 変身メソッドの定義

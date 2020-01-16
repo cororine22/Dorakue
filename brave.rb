@@ -4,22 +4,21 @@ class Brave < Character
 
     # 攻撃処理を実装するメソッド
     def attack(monster)
-    #   puts "#{@name}の攻撃"
   
-      # decision_attack_typeメソッドの呼び出し
-      attack_type = decision_attack_type
+        # decision_attack_typeメソッドの呼び出し
+        attack_type = decision_attack_type
   
-      # calculate_damageメソッドの呼び出し
-      damage = calculate_damage(target: monster, attack_type: attack_type)
+        # calculate_damageメソッドの呼び出し
+        damage = calculate_damage(target: monster, attack_type: attack_type)
   
-      # ダメージをHPに反映させる
-      cause_damage(target: monster, damage: damage)
+        # ダメージをHPに反映させる
+        cause_damage(target: monster, damage: damage)
 
-      # attack_messageの呼び出し
-      attack_message(attack_type: attack_type)
-  
-      # メッセージを追記
-    #   puts "#{monster.name}の残りHPは#{monster.hp}だ"
+        # attack_messageの呼び出し
+        attack_message(attack_type: attack_type)
+        # damage_messageの呼び出し
+        damage_message(target: monster, damage: damage)
+      
     end
   
     private
@@ -60,7 +59,6 @@ class Brave < Character
   
         # もしターゲットのHPがマイナスになるなら0を代入
         target.hp = 0 if target.hp < 0
-        # puts "#{target.name}は#{damage}のダメージを受けた"
       end
   
       def calculate_special_attack
